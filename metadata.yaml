@@ -1,0 +1,7 @@
+homepage: "https://www.concedo.com.br"
+documentation: "https://www.concedo.com.br/guias/instalar-com-gtm"
+versions:
+  # Placeholder: replace with the SHA of the commit that added template.tpl to the public
+  # repository (it only exists after the first push). See "Publishing" in README.md.
+  - sha: REPLACE_WITH_COMMIT_SHA
+    changeNotes: Initial release.
