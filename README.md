@@ -37,7 +37,7 @@ are granted in every update.
 | Wait for update                         | Milliseconds Google tags wait for a stored choice. Default 500.                                       |
 | Redact ads data                         | `ads_data_redaction`. On by default.                                                                  |
 | Pass ad click information through URLs  | `url_passthrough`. Off by default; it can break checkouts that redirect.                              |
-| Google developer ID                     | Optional. Empty means no `developer_id` is set.                                                       |
+| Google developer ID                     | Concedo's CMP developer ID. Default `dM2Q4ND`; empty means no `developer_id` is set.                  |
 
 ## Install
 
@@ -60,6 +60,10 @@ events, so the tag writes two globals before loading the script:
 - `window.concedoGtmAoDecidir(decision)`: called by the script with
   `{ necessarios, estatisticas, marketing, personalizacao }` (booleans). While this function
   exists the script does not push `gtag('consent', ...)` commands to the dataLayer itself.
+
+## Documentation and support
+
+For installation guidance in Portuguese, see the [Concedo help center](https://www.concedo.com.br/guias/instalar-com-gtm). Report template issues in this repository.
 
 ## License
 
