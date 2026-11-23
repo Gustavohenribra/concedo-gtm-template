@@ -1,5 +1,7 @@
 homepage: "https://www.concedo.com.br"
 documentation: "https://github.com/Gustavohenribra/concedo-gtm-template#readme"
 versions:
+  - sha: 2d8e6898434cc5c0924589f34c3e9bf06bbe8b8a
+    changeNotes: The template always sends the Concedo CMP developer ID, including in containers that previously customized the field.
   - sha: 1f54052a40c605cd05a17b6b67cbed44554febb8
     changeNotes: Initial release of Concedo CMP for Google Consent Mode v2.
