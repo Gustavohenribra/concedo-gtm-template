@@ -233,14 +233,6 @@ ___TEMPLATE_PARAMETERS___
     "simpleValueType": true,
     "defaultValue": false,
     "help": "Sets url_passthrough. It can break checkouts that redirect, so test a purchase before enabling it."
-  },
-  {
-    "type": "TEXT",
-    "name": "developerId",
-    "displayName": "Google developer ID (optional)",
-    "simpleValueType": true,
-    "defaultValue": "dM2Q4ND",
-    "help": "Concedo\u0027s Google-issued CMP developer ID. Leave it as is; empty means no developer_id is set."
   }
 ]
 
@@ -317,12 +309,7 @@ gtagSet({
   url_passthrough: data.urlPassthrough === true
 });
 
-const developerId = makeString(data.developerId || '').trim();
-if (developerId) {
-  const developerSetting = {};
-  developerSetting['developer_id.' + developerId] = true;
-  gtagSet(developerSetting);
-}
+gtagSet({ 'developer_id.dM2Q4ND': true });
 
 const publicKey = makeString(data.publicKey || '').trim();
 if (!publicKey) {
@@ -637,7 +624,7 @@ ___WEB_PERMISSIONS___
               },
               {
                 "type": 1,
-                "string": "developer_id.*"
+                "string": "developer_id.dM2Q4ND"
               }
             ]
           }
@@ -975,25 +962,20 @@ scenarios:
 
     assertApi('updateConsentState').wasNotCalled();
     assertApi('injectScript').wasCalled();
-- name: Empty developer ID does not set developer_id
+- name: Fixed developer ID is emitted without user configuration
   code: |-
     runCode(mockData);
-
-    assertThat(gtagSetCalls).hasLength(1);
-    assertApi('gtagSet').wasCalledWith({
-      ads_data_redaction: true,
-      url_passthrough: false
-    });
-- name: Developer ID is set when filled in
+    assertThat(gtagSetCalls).hasLength(2);
+    assertThat(gtagSetCalls[1]['developer_id.dM2Q4ND']).isTrue();
+- name: A legacy developer ID cannot override the fixed ID
   code: |-
     mockData.developerId = 'dTESTID';
     mockData.urlPassthrough = true;
-
     runCode(mockData);
-
     assertThat(gtagSetCalls).hasLength(2);
     assertThat(gtagSetCalls[0].url_passthrough).isTrue();
-    assertThat(gtagSetCalls[1]['developer_id.dTESTID']).isTrue();
+    assertThat(gtagSetCalls[1]['developer_id.dM2Q4ND']).isTrue();
+    assertThat(gtagSetCalls[1]['developer_id.dTESTID']).isUndefined();
 - name: Empty key fails without injecting the script
   code: |-
     mockData.publicKey = '';
@@ -1014,8 +996,7 @@ setup: |-
     publicKey: 'pg_test_0123456789',
     waitForUpdate: '500',
     adsDataRedaction: true,
-    urlPassthrough: false,
-    developerId: ''
+    urlPassthrough: false
   };
   const globalDefault = {
     ad_storage: 'denied',

@@ -8,7 +8,7 @@ connects it to Google Consent Mode v2.
 
 1. Sets the default consent state with `setDefaultConsentState`, once per region row. Unless a
    row covers all regions, the global default is everything denied except `security_storage`.
-2. Sets `ads_data_redaction`, `url_passthrough` and, when filled in, the developer ID.
+2. Sets `ads_data_redaction`, `url_passthrough` and the fixed Concedo developer ID (`dM2Q4ND`).
 3. For a returning visitor, reads the stored choice from the `concedo_consentimento` cookie and
    calls `updateConsentState` before any other tag fires.
 4. Loads the Concedo script (`https://www.concedo.com.br/cmp/v1/loader.js`), which shows the
@@ -37,7 +37,6 @@ are granted in every update.
 | Wait for update                         | Milliseconds Google tags wait for a stored choice. Default 500.                                       |
 | Redact ads data                         | `ads_data_redaction`. On by default.                                                                  |
 | Pass ad click information through URLs  | `url_passthrough`. Off by default; it can break checkouts that redirect.                              |
-| Google developer ID                     | Concedo's CMP developer ID. Default `dM2Q4ND`; empty means no `developer_id` is set.                  |
 
 ## Install
 
